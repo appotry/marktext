@@ -11,9 +11,9 @@ Preferences can be controlled and modified in the settings window or via the `pr
 | titleBarStyle          | String  | custom        | The title bar style on Linux and Window: `custom` or `native`                                                                                              |
 | openFilesInNewWindow   | Boolean | false         | true, false                                                                                                                                                |
 | openFolderInNewWindow  | Boolean | false         | true, false                                                                                                                                                |
+| zoom                   | Number  | 1.0           | The zoom level. Between 0.5 and 2.0 inclusive.                                                                                              |
 | hideScrollbar          | Boolean | false         | Whether to hide scrollbars. Optional value: true, false                                                                                                    |
 | wordWrapInToc          | Boolean | false         | Whether to enable word wrap in TOC. Optional value: true, false                                                                                            |
-| aidou                  | Boolean | true          | Enable aidou. Optional value: true, false                                                                                                                  |
 | fileSortBy             | String  | created       | Sort files in opened folder by `created` time, modified time and title.                                                                                    |
 | startUpAction          | String  | lastState     | The action after MarkText startup, open the last edited content, open the specified folder or blank page, optional value: `lastState`, `folder`, `blank` |
 | defaultDirectoryToOpen | String  | `""`          | The path that should be opened if `startUpAction=folder`.                                                                                                  |
@@ -81,7 +81,7 @@ These entires don't have a settings option and need to be changed manually.
 
 | Key                  | Type             | Default | Description                                                                                                                                                      |
 | -------------------- | ---------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| searchExclusions     | Array of Strings | `[]`    | The filename exclusions for the file searcher. Default: `'*.markdown', '*.mdown', '*.mkdn', '*.md', '*.mkd', '*.mdwn', '*.mdtxt', '*.mdtext', '*.text', '*.txt'` |
+| searchExclusions     | Array of Strings | `[]`    | The filename exclusions for the file searcher. Default: `'*.markdown', '*.mdown', '*.mkdn', '*.md', '*.mkd', '*.mdwn', '*.mdtxt', '*.mdtext', '*.mdx', '*.text', '*.txt'` |
 | searchMaxFileSize    | String           | `""`    | The maximum file size to search in (e.g. 50K or 10MB). Default: unlimited                                                                                        |
 | searchIncludeHidden  | Boolean          | false   | Search hidden files and directories                                                                                                                              |
 | searchNoIgnore       | Boolean          | false   | Don't respect ignore files such as `.gitignore`.                                                                                                                 |

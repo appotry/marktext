@@ -43,7 +43,7 @@ class Preference extends EventEmitter {
         defaultSettings.theme = 'dark'
       }
     } catch (err) {
-      log(err)
+      log.error(err)
     }
 
     if (!defaultSettings) {
@@ -121,7 +121,7 @@ class Preference extends EventEmitter {
     })
   }
 
-  getPreferedEol () {
+  getPreferredEol () {
     const endOfLine = this.getItem('endOfLine')
     if (endOfLine === 'lf') {
       return 'lf'

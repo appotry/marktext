@@ -28,6 +28,13 @@
     "type": "boolean",
     "default": false
   },
+  "zoom": {
+    "description": "General--The zoom level. Between 0.5 and 2.0 inclusive.",
+    "type": "number",
+    "minimum": 0.5,
+    "maximum": 2.0,
+    "default": 1.0
+  },
   "hideScrollbar": {
     "description": "General--Whether to hide scrollbars.",
     "type": "boolean",
@@ -37,10 +44,6 @@
     "description": "General--Whether to enable word wrap in TOC.",
     "type": "boolean",
     "default": false
-  },
-  "aidou": {
-    "description": "General--Enable aidou",
-    "type": "boolean"
   },
   "fileSortBy": {
     "description": "General--Sort files in opened folder by created time, modified time and title.",
@@ -326,23 +329,14 @@
     "type": "boolean",
     "default": false
   },
-  "spellcheckerIsHunspell": {
-    "description": "Spelling--Whether Hunspell or the OS spell checker is used (macOS only).",
-    "type": "boolean",
-    "default": false
-  },
   "spellcheckerNoUnderline": {
     "description": "Spelling--Don't underline spelling mistakes.",
     "type": "boolean",
     "default": false
   },
-  "spellcheckerAutoDetectLanguage": {
-    "description": "Spelling--Try to automatically identify the used language when typing.",
-    "type": "boolean",
-    "default": false
-  },
   "spellcheckerLanguage": {
     "description": "Spelling--The spell checker language",
+    "type": "string",
     "pattern": "^[a-z]{2,3}(?:[-](?:[0-9]|[a-zA-Z]){2,}){0,2}$",
     "default": "en-US"
   },

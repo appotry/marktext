@@ -11,7 +11,7 @@ import setupEnvironment from './app/env'
 import { getLogLevel } from './utils'
 
 const initializeLogger = appEnvironment => {
-  log.transports.console.level = process.env.NODE_ENV === 'development' ? true : 'error'
+  log.transports.console.level = process.env.NODE_ENV === 'development' ? 'info' : 'error'
   log.transports.rendererConsole = null
   log.transports.file.resolvePath = () => path.join(appEnvironment.paths.logPath, 'main.log')
   log.transports.file.level = getLogLevel()
@@ -32,11 +32,6 @@ setupExceptionHandler()
 const args = cli()
 const appEnvironment = setupEnvironment(args)
 initializeLogger(appEnvironment)
-
-// Workaround for GH#1359
-if (process.platform === 'linux' && process.env.XDG_SESSION_TYPE === 'wayland') {
-  app.disableHardwareAcceleration()
-}
 
 if (args['--disable-gpu']) {
   app.disableHardwareAcceleration()

@@ -90,13 +90,20 @@ export default {
       const editor = this.editor = codeMirror(container, codeMirrorConfig)
 
       bus.$on('file-loaded', this.handleFileChange)
+      bus.$on('invalidate-image-cache', this.handleInvalidateImageCache)
       bus.$on('file-changed', this.handleFileChange)
-      bus.$on('dotu-select', this.handleSelectDoutu)
       bus.$on('selectAll', this.handleSelectAll)
       bus.$on('image-action', this.handleImageAction)
 
       setMode(editor, 'markdown')
       this.listenChange()
+
+      editor.on('contextmenu', (cm, event) => {
+        // Make sure no context menu is shown in source-code mode because we have to handle
+        // Muyas menu by Electron.
+        event.preventDefault()
+        event.stopPropagation()
+      })
 
       // NOTE: Cursor may be not null but the inner values are.
       if (cursor && cursor.anchor && cursor.focus) {
@@ -115,8 +122,8 @@ export default {
     if (this.commitTimer) clearTimeout(this.commitTimer)
 
     bus.$off('file-loaded', this.handleFileChange)
+    bus.$off('invalidate-image-cache', this.handleInvalidateImageCache)
     bus.$off('file-changed', this.handleFileChange)
-    bus.$off('dotu-select', this.handleSelectDoutu)
     bus.$off('selectAll', this.handleSelectAll)
     bus.$off('image-action', this.handleImageAction)
 
@@ -172,12 +179,6 @@ export default {
         } else {
           setCursorAtLastLine()
         }
-      }
-    },
-    handleSelectDoutu (url) {
-      const { editor } = this
-      if (editor) {
-        editor.replaceSelection(`![](${url})`)
       }
     },
     listenChange () {
@@ -253,8 +254,25 @@ export default {
     },
 
     handleSelectAll () {
-      if (this.sourceCode && this.editor) {
+      if (!this.sourceCode) {
+        return
+      }
+
+      const { editor } = this
+      if (editor && editor.hasFocus()) {
         this.editor.execCommand('selectAll')
+      } else {
+        const activeElement = document.activeElement
+        const nodeName = activeElement.nodeName
+        if (nodeName === 'INPUT' || nodeName === 'TEXTAREA') {
+          activeElement.select()
+        }
+      }
+    },
+
+    handleInvalidateImageCache () {
+      if (this.editor) {
+        this.editor.invalidateImageCache()
       }
     }
   }

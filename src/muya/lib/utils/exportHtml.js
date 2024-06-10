@@ -9,7 +9,7 @@ import highlightCss from 'prismjs/themes/prism.css'
 import katexCss from 'katex/dist/katex.css'
 import footerHeaderCss from '../assets/styles/headerFooterStyle.css'
 import { EXPORT_DOMPURIFY_CONFIG } from '../config'
-import { sanitize, unescapeHtml } from '../utils'
+import { sanitize, unescapeHTML } from '../utils'
 import { validEmoji } from '../ui/emojis'
 
 export const getSanitizeHtml = (markdown, options) => {
@@ -38,18 +38,20 @@ class ExportHtml {
     for (const code of codes) {
       const preEle = code.parentNode
       const mermaidContainer = document.createElement('div')
-      mermaidContainer.innerHTML = code.innerHTML
+      mermaidContainer.innerHTML = sanitize(unescapeHTML(code.innerHTML), EXPORT_DOMPURIFY_CONFIG, true)
       mermaidContainer.classList.add('mermaid')
       preEle.replaceWith(mermaidContainer)
     }
     const mermaid = await loadRenderer('mermaid')
     // We only export light theme, so set mermaid theme to `default`, in the future, we can choose whick theme to export.
     mermaid.initialize({
+      securityLevel: 'strict',
       theme: 'default'
     })
     mermaid.init(undefined, this.exportContainer.querySelectorAll('div.mermaid'))
     if (this.muya) {
       mermaid.initialize({
+        securityLevel: 'strict',
         theme: this.muya.options.mermaidTheme
       })
     }
@@ -65,7 +67,7 @@ class ExportHtml {
     }
     const codes = this.exportContainer.querySelectorAll(selector)
     for (const code of codes) {
-      const rawCode = unescapeHtml(code.innerHTML)
+      const rawCode = unescapeHTML(code.innerHTML)
       const functionType = (() => {
         if (/sequence/.test(code.className)) {
           return 'sequence'
